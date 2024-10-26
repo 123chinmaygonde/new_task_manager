@@ -1,1 +1,30 @@
+# Node.js dependencies
 node_modules/
+
+# Logs
+logs
+*.log
+
+# Environment variables
+.env
+
+# Build output
+dist/
+build/
+
+# Temporary files
+tmp/
+temp/
+
+# IDE or editor specific files
+.idea/
+.vscode/
+.DS_Store
+
+# Operating system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Coverage reports
+coverage/
