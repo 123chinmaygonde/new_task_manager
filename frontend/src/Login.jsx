@@ -12,7 +12,7 @@ const Mainpage = () => {
         ...data,
         [e.target.name]:e.target.value
       })
-      console.log(data);
+      
     }
     const navigate = useNavigate()
     const signup = async (e) => {

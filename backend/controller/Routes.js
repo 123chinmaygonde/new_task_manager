@@ -53,7 +53,16 @@ router.put('/updatetask/:id',auth,async(req,res)=>{
         const {email} = req.dataofuser;
         const id = req.params.id;
         const {title,description,completed} = req.body;
-        const updateTask = await Task.findByIdAndUpdate(req.params.id,req.body,{new:true})
+        const updateFields = {};
+        if (title) updateFields.title = title;
+        if (description) updateFields.description = description;
+        if (completed !== undefined) updateFields.completed = completed; // Check for undefined to allow false
+        
+        const updateTask = await Task.findByIdAndUpdate(
+            req.params.id,
+            updateFields,
+            { new: true }
+        );
           
         const alltasks = await User.findOne({email:email}).populate("tasks")
 

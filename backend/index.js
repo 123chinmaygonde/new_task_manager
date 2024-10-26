@@ -10,10 +10,12 @@ const cookieParser = require("cookie-parser")
 const app = express()
 ConnectDb()
 
-app.use(cors({
-    origin:[process.env.FRONTEND_URL],
-    credentials:true
-}))
+app.use(cors(
+    {
+        credentials:true,
+        origin:[process.env.FRONTEND_URL]
+    }
+))
 app.use(express.json())
 app.use(cookieParser())
 

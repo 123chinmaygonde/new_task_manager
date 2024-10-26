@@ -3,6 +3,7 @@ import axios from 'axios'
 import { BACKEND_URL } from './link';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router';
 const App = () => {
   const [tasks,setTasks]=useState([])
   const [data,setdata] = useState({title:"",description:""})
@@ -15,6 +16,7 @@ const [newdata,setnewdata] = useState({ntitle:"",ndescription:""})
     })
    
    }
+   const navigate = useNavigate()
    function onchangehandlernew(e){
     setnewdata({
       ...newdata,
@@ -42,7 +44,7 @@ const [newdata,setnewdata] = useState({ntitle:"",ndescription:""})
     
   }
   const updatetask = (id) => {
-    console.log(id);
+    
 
     axios.put(
       `${BACKEND_URL}/api/tasks/updatetask/${id}`, 
@@ -61,7 +63,14 @@ const [newdata,setnewdata] = useState({ntitle:"",ndescription:""})
     .catch(error => console.error(error));
 };
 
-
+const logout =()=>{
+  axios.get(`${BACKEND_URL}/api/user/logout`,{withCredentials:true}).then((res)=>{
+    toast.success(res.data.message)
+    navigate("/login")
+  }).catch((err)=>{
+toast.error(err.message)
+  })
+}
   const deleteTask=(id)=>{
     axios.delete(`${BACKEND_URL}/api/tasks/deletetask/${id}`,{withCredentials:true})
     .then(()=>setTasks(tasks.filter(task=>task._id !== id)))
@@ -70,7 +79,9 @@ const [newdata,setnewdata] = useState({ntitle:"",ndescription:""})
   return (
     <div className='p-6 bg-gray-100 min-h-screen'>
       <h1 className='text-3xl font-bold text-center mb-6'>Task Manager</h1>
-
+         <div className=' flex w-full justify-end pb-2'>
+          <button onClick={logout} className='bg-red-500 text-white p-3 rounded '> logout</button>
+         </div>
       <div className='bg-white p-4 rounded shadow-md mb-6'>
         <input className='border p-2 w-full mb-4' name="title" type='text' onChange={onchangehandler} value={data.title} placeholder='Enter Task Title'/>
 
